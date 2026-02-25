@@ -35,7 +35,7 @@ export function TrendChart({ stats }: TrendChartProps) {
           Nombre total de patientes (venues + absentes) semaine par semaine.
         </p>
       </div>
-      <div className="mt-4 h-48 w-full rounded-lg bg-amber-50 px-3 py-3">
+      <div className="mt-4 h-48 w-full rounded-lg bg-rose-50 px-3 py-3">
         <svg className="h-full w-full" viewBox="0 0 100 60">
           {/* Axes */}
           <line x1="8" y1="5" x2="8" y2="50" stroke="#94a3b8" strokeWidth="0.5" />

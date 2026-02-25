@@ -90,7 +90,7 @@ export function WeeklyAndWeekdayCharts({ stats }: WeeklyAndWeekdayChartsProps) {
           {weekly.map((w) => (
             <div key={w.key} className="flex items-center gap-4">
               <div className="w-28 text-base font-medium text-slate-800">{w.label}</div>
-              <div className="flex-1 h-4 rounded-full bg-amber-100">
+              <div className="flex-1 h-4 rounded-full bg-rose-100">
                 <div
                   className="h-4 rounded-full bg-rose-400"
                   style={{
@@ -106,7 +106,7 @@ export function WeeklyAndWeekdayCharts({ stats }: WeeklyAndWeekdayChartsProps) {
         </div>
       </div>
 
-      <div className="pt-6 border-t-2 border-amber-100">
+      <div className="pt-6 border-t-2 border-rose-100">
         <h3 className="text-xl font-semibold text-slate-900">
           Quels jours sont les plus remplis ?
         </h3>
@@ -129,7 +129,7 @@ export function WeeklyAndWeekdayCharts({ stats }: WeeklyAndWeekdayChartsProps) {
                     <span className="ml-1 text-xs text-rose-600 font-semibold">★</span>
                   )}
                 </div>
-                <div className="flex-1 h-4 rounded-full bg-amber-100">
+                <div className="flex-1 h-4 rounded-full bg-rose-100">
                   <div
                     className="h-4 rounded-full bg-emerald-400"
                     style={{
