@@ -230,7 +230,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-amber-50 px-4 py-10 text-slate-900">
+    <div className="min-h-screen bg-rose-50 px-4 py-10 text-slate-900">
       <div className="mx-auto max-w-5xl space-y-10">
         <header className="flex flex-col gap-2 border-b border-slate-200 pb-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
