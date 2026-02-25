@@ -15,10 +15,10 @@ export function TrendChart({ stats }: TrendChartProps) {
     );
   }
 
-  // Calculer le nombre total de patientes (venues + absentes) semaine par semaine
+  // Calculer le nombre de patientes venues (sans les absentes) semaine par semaine
   const weeklyTotals = stats.weekly.map((w) => ({
     label: `S${w.week}-${String(w.year).slice(-2)}`,
-    total: w.total,
+    total: w.totalSeen,
   }));
 
   const maxTotal = Math.max(...weeklyTotals.map((d) => d.total), 0);
@@ -32,7 +32,7 @@ export function TrendChart({ stats }: TrendChartProps) {
           Évolution hebdomadaire du nombre de patientes
         </h3>
         <p className="mt-1 text-base text-slate-600">
-          Nombre total de patientes (venues + absentes) semaine par semaine.
+          Nombre de patientes venues semaine par semaine.
         </p>
       </div>
       <div className="mt-4 h-48 w-full rounded-lg bg-rose-50 px-3 py-3">
