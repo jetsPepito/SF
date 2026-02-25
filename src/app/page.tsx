@@ -5,6 +5,7 @@ import { DailyAndWeeklyTables } from "@/components/DailyAndWeeklyTables";
 import { DailyForm } from "@/components/DailyForm";
 import { SummaryPanel } from "@/components/SummaryPanel";
 import { TrendChart } from "@/components/TrendChart";
+import { WeeklyAndWeekdayCharts } from "@/components/WeeklyAndWeekdayCharts";
 import type { DailyEntry, DailyWithStats, Period, RollingPoint, Stats, WeeklyWithStats } from "@/lib/types";
 import { getISOWeek } from "@/lib/utils";
 import { useEffect, useMemo, useState } from "react";
@@ -293,13 +294,16 @@ export default function Home() {
 
         {activeTab === "stats" && (
           <>
-            <main className="mt-4 grid gap-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)]">
-              <SummaryPanel
-                stats={stats}
-                loading={loading}
-                period={period}
-                onPeriodChange={setPeriod}
-              />
+            <main className="mt-4 grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]">
+              <div className="space-y-4">
+                <SummaryPanel
+                  stats={stats}
+                  loading={loading}
+                  period={period}
+                  onPeriodChange={setPeriod}
+                />
+                <WeeklyAndWeekdayCharts stats={stats} />
+              </div>
               <TrendChart stats={stats} />
             </main>
 
