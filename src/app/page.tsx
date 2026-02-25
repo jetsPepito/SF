@@ -230,7 +230,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-rose-50 via-amber-50 to-emerald-50 px-4 py-10 text-slate-900">
+    <div className="min-h-screen bg-amber-50 px-4 py-10 text-slate-900">
       <div className="mx-auto max-w-5xl space-y-10">
         <header className="flex flex-col gap-2 border-b border-slate-200 pb-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -294,17 +294,24 @@ export default function Home() {
 
         {activeTab === "stats" && (
           <>
-            <main className="mt-4 grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)]">
-              <div className="space-y-4">
-                <SummaryPanel
-                  stats={stats}
-                  loading={loading}
-                  period={period}
-                  onPeriodChange={setPeriod}
-                />
-                <WeeklyAndWeekdayCharts stats={stats} />
-              </div>
+            {/* Graphique d'évolution - en pleine largeur pour bien voir la tendance */}
+            <section className="mt-4">
               <TrendChart stats={stats} />
+            </section>
+
+            {/* Section des moyennes - mise en avant pour identifier les jours les plus remplis */}
+            <section className="mt-6">
+              <WeeklyAndWeekdayCharts stats={stats} />
+            </section>
+
+            {/* Synthèse rapide */}
+            <main className="mt-6">
+              <SummaryPanel
+                stats={stats}
+                loading={loading}
+                period={period}
+                onPeriodChange={setPeriod}
+              />
             </main>
 
             <section className="mt-4 rounded-2xl bg-white/90 p-5 shadow-sm ring-1 ring-slate-200/80 backdrop-blur">
