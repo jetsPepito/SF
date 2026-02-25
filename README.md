@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Suivi des patientes – Application Sage-Femme
 
-## Getting Started
+Application web simple pour suivre quotidiennement le nombre de patientes vues et absentes, avec des statistiques détaillées.
 
-First, run the development server:
+## 🚀 Lancer le projet
 
+### Option 1 : Avec Docker (recommandé - le plus simple)
+
+Cette option lance automatiquement la base de données PostgreSQL et l'application.
+
+#### Prérequis
+- [Docker](https://www.docker.com/get-started) et Docker Compose installés
+
+#### Commandes
+
+**Pour le développement (avec hot-reload) :**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd sagefemme-app
+docker compose -f docker-compose.dev.yml up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Pour la production :**
+```bash
+cd sagefemme-app
+docker compose up --build
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+L'application sera accessible sur **http://localhost:3000**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+La base de données PostgreSQL sera accessible sur le port **5432** avec :
+- User: `sagefemme`
+- Password: `sagefemme`
+- Database: `sagefemme`
 
-## Learn More
+**Arrêter les conteneurs :**
+```bash
+docker compose -f docker-compose.dev.yml down
+# ou pour la production
+docker compose down
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Option 2 : Sans Docker (développement local)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### Prérequis
+- Node.js **≥ 20.9** (recommandé : Node 22)
+- PostgreSQL installé et démarré localement
 
-## Deploy on Vercel
+#### Étapes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Installer les dépendances :**
+```bash
+cd sagefemme-app
+npm install
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Configurer la base de données :**
+
+Créer un fichier `.env.local` à la racine du projet :
+```env
+DATABASE_URL=postgres://sagefemme:sagefemme@localhost:5432/sagefemme
+```
+
+3. **Créer la base de données PostgreSQL :**
+```bash
+# Se connecter à PostgreSQL
+psql -U postgres
+
+# Créer l'utilisateur et la base
+CREATE USER sagefemme WITH PASSWORD 'sagefemme';
+CREATE DATABASE sagefemme OWNER sagefemme;
+GRANT ALL PRIVILEGES ON DATABASE sagefemme TO sagefemme;
+\q
+```
+
+4. **Générer le client Prisma et créer les tables :**
+```bash
+# Générer le client Prisma
+npm run db:generate
+
+# Créer les tables dans la base de données
+npm run db:push
+```
+
+5. **Lancer l'application :**
+```bash
+npm run dev
+```
+
+L'application sera accessible sur **http://localhost:3000**
+
+> **Note :** Avec Prisma, les tables sont créées via `npm run db:push` (ou `npm run db:migrate` pour des migrations versionnées).
+
+---
+
+## 📁 Structure du projet
+
+```
+src/
+├── app/
+│   ├── page.tsx              # Page principale
+│   └── api/daily/route.ts    # API pour les données (utilise Prisma)
+├── components/               # Composants React
+│   ├── DailyForm.tsx
+│   ├── SummaryPanel.tsx
+│   ├── TrendChart.tsx
+│   └── DailyAndWeeklyTables.tsx
+├── lib/
+│   ├── types.ts              # Types TypeScript
+│   ├── utils.ts              # Fonctions utilitaires
+│   └── prisma.ts             # Client Prisma (singleton)
+└── prisma/
+    └── schema.prisma          # Schéma de la base de données
+```
+
+## 🛠️ Scripts disponibles
+
+- `npm run dev` - Lancer en mode développement
+- `npm run build` - Build pour la production (génère aussi le client Prisma)
+- `npm run start` - Lancer en mode production
+- `npm run lint` - Vérifier le code avec ESLint
+- `npm run db:generate` - Générer le client Prisma
+- `npm run db:push` - Synchroniser le schéma avec la base (développement)
+- `npm run db:migrate` - Créer une migration versionnée
+- `npm run db:studio` - Ouvrir Prisma Studio (interface graphique pour la DB)
+
+## 📊 Fonctionnalités
+
+- ✅ Saisie quotidienne du nombre de patientes vues / absentes
+- ✅ Statistiques jour par jour et semaine par semaine
+- ✅ Taux de présence / no-show
+- ✅ Moyennes quotidiennes
+- ✅ Graphique de tendance (moyenne glissante 7 jours)
+- ✅ Interface simple et intuitive
+
+## 🚢 Déploiement
+
+### Sur Vercel (recommandé)
+
+1. Pousser le code sur GitHub
+2. Aller sur [Vercel](https://vercel.com) et importer le projet
+3. Ajouter une base de données Postgres via Vercel (Storage > Databases)
+4. Vercel configurera automatiquement la variable `DATABASE_URL`
+5. **Important :** Ajouter un script de build dans les settings Vercel :
+   - Build Command: `npm run build` (qui inclut `prisma generate`)
+   - Ou ajouter un script postinstall dans `package.json` :
+     ```json
+     "postinstall": "prisma generate"
+     ```
+6. Cliquer sur "Deploy"
+
+**Après le déploiement**, exécuter la migration :
+```bash
+# Via le terminal Vercel ou en local avec la DATABASE_URL de production
+npx prisma db push
+# ou pour des migrations versionnées
+npx prisma migrate deploy
+```
+
+---
+
+## 💡 Astuce
+
+Si vous vous trompez en saisissant une journée, il suffit de ressaisir la même date avec les bons chiffres. La journée sera automatiquement mise à jour.

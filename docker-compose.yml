@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sagefemme
+      POSTGRES_PASSWORD: sagefemme
+      POSTGRES_DB: sagefemme
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      NODE_ENV: production
+      # URL utilisée par Prisma
+      DATABASE_URL: postgres://sagefemme:sagefemme@db:5432/sagefemme
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data:
