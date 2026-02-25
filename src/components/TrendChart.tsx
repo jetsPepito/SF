@@ -9,7 +9,7 @@ type TrendChartProps = {
 export function TrendChart({ stats }: TrendChartProps) {
   if (!stats || stats.rolling7Days.length <= 1) {
     return (
-      <section className="rounded-2xl bg-white/60 p-5 text-sm text-slate-500 ring-1 ring-dashed ring-slate-200">
+      <section className="rounded-2xl bg-white/70 p-5 text-base text-slate-500 ring-1 ring-dashed ring-slate-200">
         Pas encore assez de données pour afficher une tendance (7 jours
         glissants).
       </section>
@@ -22,8 +22,8 @@ export function TrendChart({ stats }: TrendChartProps) {
   const range = max - min || 1;
 
   return (
-    <section className="rounded-2xl bg-white/90 p-4 shadow-sm ring-1 ring-slate-200/80 backdrop-blur">
-      <p className="text-xs font-medium text-slate-700">
+    <section className="rounded-2xl bg-white/90 p-5 shadow-sm ring-1 ring-emerald-100/80 backdrop-blur">
+      <p className="text-sm font-medium text-slate-700">
         Tendance (présence, moyenne glissante 7 jours)
       </p>
       <div className="mt-3 h-24 w-full rounded-lg bg-slate-50 px-2 py-2">

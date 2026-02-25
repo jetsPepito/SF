@@ -230,14 +230,14 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-sky-50 via-white to-indigo-50 px-4 py-8 text-slate-900">
-      <div className="mx-auto max-w-5xl space-y-8">
+    <div className="min-h-screen bg-linear-to-br from-rose-50 via-amber-50 to-emerald-50 px-4 py-10 text-slate-900">
+      <div className="mx-auto max-w-5xl space-y-10">
         <header className="flex flex-col gap-2 border-b border-slate-200 pb-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
               Suivi des patientes – Cabinet de sage-femme
             </h1>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-2 text-base text-slate-700">
               Enregistrez chaque jour le nombre de patientes vues et absentes, et
               visualisez vos statistiques en un clin d’œil.
             </p>
@@ -250,11 +250,11 @@ export default function Home() {
         </header>
 
         {/* Tabs de navigation */}
-        <nav className="mt-2 inline-flex rounded-full bg-slate-100 p-1 text-xs text-slate-700">
+        <nav className="mt-4 inline-flex rounded-full bg-white/70 p-1.5 text-sm text-slate-700 shadow-sm ring-1 ring-slate-200/70">
           <button
             type="button"
             onClick={() => setActiveTab("saisie")}
-            className={`rounded-full px-4 py-1.5 ${
+            className={`rounded-full px-6 py-2 ${
               activeTab === "saisie"
                 ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200"
                 : ""
@@ -265,7 +265,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setActiveTab("stats")}
-            className={`rounded-full px-4 py-1.5 ${
+            className={`rounded-full px-6 py-2 ${
               activeTab === "stats"
                 ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200"
                 : ""

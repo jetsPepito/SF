@@ -75,27 +75,27 @@ export function WeeklyAndWeekdayCharts({ stats }: WeeklyAndWeekdayChartsProps) {
   const maxWeekday = Math.max(...weekday.map((w) => w.avgSeen), 0);
 
   return (
-    <section className="space-y-4 rounded-2xl bg-white/90 p-5 shadow-sm ring-1 ring-slate-200/80 backdrop-blur">
+    <section className="space-y-4 rounded-2xl bg-white/90 p-5 shadow-sm ring-1 ring-amber-100/80 backdrop-blur">
       <div>
-        <h3 className="text-sm font-medium text-slate-900">
+        <h3 className="text-base font-medium text-slate-900">
           Moyenne de patientes par semaine
         </h3>
-        <p className="mt-1 text-xs text-slate-600">
+        <p className="mt-1 text-sm text-slate-600">
           Moyenne de patientes venues par semaine (sur la période affichée).
         </p>
-        <div className="mt-3 space-y-1.5">
+        <div className="mt-3 space-y-2">
           {weekly.map((w) => (
             <div key={w.key} className="flex items-center gap-2">
-              <div className="w-24 text-[11px] text-slate-700">{w.label}</div>
+              <div className="w-24 text-xs text-slate-700">{w.label}</div>
               <div className="flex-1 h-2 rounded-full bg-slate-100">
                 <div
-                  className="h-2 rounded-full bg-indigo-500"
+                  className="h-2 rounded-full bg-rose-400"
                   style={{
                     width: `${maxWeekly ? (w.avgSeen / maxWeekly) * 100 : 0}%`,
                   }}
                 />
               </div>
-              <div className="w-10 text-right text-[11px] text-slate-800">
+              <div className="w-10 text-right text-xs text-slate-800">
                 {w.avgSeen.toFixed(1)}
               </div>
             </div>
@@ -104,25 +104,25 @@ export function WeeklyAndWeekdayCharts({ stats }: WeeklyAndWeekdayChartsProps) {
       </div>
 
       <div className="pt-2 border-t border-slate-100">
-        <h3 className="text-sm font-medium text-slate-900">
+        <h3 className="text-base font-medium text-slate-900">
           Moyenne par jour de la semaine
         </h3>
-        <p className="mt-1 text-xs text-slate-600">
+        <p className="mt-1 text-sm text-slate-600">
           Pour voir quel jour est en moyenne le plus rempli (patientes venues).
         </p>
-        <div className="mt-3 space-y-1.5">
+        <div className="mt-3 space-y-2">
           {weekday.map((d) => (
             <div key={d.index} className="flex items-center gap-2">
-              <div className="w-10 text-[11px] text-slate-700">{d.label}</div>
+              <div className="w-10 text-xs text-slate-700">{d.label}</div>
               <div className="flex-1 h-2 rounded-full bg-slate-100">
                 <div
-                  className="h-2 rounded-full bg-emerald-500"
+                  className="h-2 rounded-full bg-emerald-400"
                   style={{
                     width: `${maxWeekday ? (d.avgSeen / maxWeekday) * 100 : 0}%`,
                   }}
                 />
               </div>
-              <div className="w-10 text-right text-[11px] text-slate-800">
+              <div className="w-10 text-right text-xs text-slate-800">
                 {d.avgSeen.toFixed(1)}
               </div>
             </div>
