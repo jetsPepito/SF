@@ -44,7 +44,6 @@ export function DailyForm({
             className="w-full rounded-xl border border-rose-100 bg-white px-4 py-2.5 text-base shadow-sm outline-none ring-0 transition focus:border-rose-300 focus:ring-2 focus:ring-rose-100"
             value={date}
             onChange={(e) => onDateChange(e.target.value)}
-            max={new Date().toISOString().slice(0, 10)}
           />
         </div>
 
