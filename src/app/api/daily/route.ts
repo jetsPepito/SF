@@ -23,16 +23,9 @@ export async function GET(req: NextRequest) {
         },
       });
     } else {
-      // Par défaut, on retourne les 60 derniers jours
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - 60);
-
+      // Sans bornes explicites, on retourne tout l'historique :
+      // le filtrage par période (60 j / tout) est fait côté client.
       entries = await prisma.dailyStat.findMany({
-        where: {
-          date: {
-            gte: cutoffDate,
-          },
-        },
         orderBy: {
           date: "asc",
         },
@@ -45,13 +38,13 @@ export async function GET(req: NextRequest) {
         date: entry.date.toISOString().split("T")[0], // Format YYYY-MM-DD
         seenCount: entry.seenCount,
         noShowCount: entry.noShowCount,
-      }))
+      })),
     );
   } catch (error) {
     console.error("Erreur lors de la récupération des données:", error);
     return NextResponse.json(
       { error: "Erreur lors de la récupération des données" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -65,17 +58,21 @@ export async function POST(req: NextRequest) {
       noShowCount?: number;
     };
 
-    if (!date || typeof seenCount !== "number" || typeof noShowCount !== "number") {
+    if (
+      !date ||
+      typeof seenCount !== "number" ||
+      typeof noShowCount !== "number"
+    ) {
       return NextResponse.json(
         { error: "date, seenCount et noShowCount sont obligatoires" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (seenCount < 0 || noShowCount < 0) {
       return NextResponse.json(
         { error: "Les valeurs ne peuvent pas être négatives" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -83,7 +80,7 @@ export async function POST(req: NextRequest) {
     if (total === 0) {
       return NextResponse.json(
         { error: "Il doit y avoir au moins 1 patiente (vue ou absente)" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -110,13 +107,13 @@ export async function POST(req: NextRequest) {
         seenCount: entry.seenCount,
         noShowCount: entry.noShowCount,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Erreur lors de l'enregistrement:", error);
     return NextResponse.json(
       { error: "Erreur lors de l'enregistrement" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
